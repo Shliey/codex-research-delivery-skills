@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deep Paper Reading"
+  short_description: "Evidence-grounded ML paper mechanisms and data flows"
+  default_prompt: "Use $deep-paper-reading in full mode to explain this paper in Chinese from input/output contracts through mechanisms and experimental evidence."

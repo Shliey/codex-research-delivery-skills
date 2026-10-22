@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "initialState": "INTAKE",
+  "terminalStates": ["ARCHIVED", "COMPLETED", "REJECTED", "CANCELLED"],
+  "commonEvents": {"NEEDS_DECISION": "AWAITING_DECISION", "WAIT": "WAITING_DEPENDENCY", "ERROR": "ERROR", "PAUSE": "PAUSED", "CANCEL": "CANCELLED"},
+  "states": {
+    "INTAKE": {"action": "intake", "events": {"ISSUE_READY": "CHANGE_PLANNING", "LIGHT_READY": "DESIGN_REVIEW", "REJECT": "REJECTED"}},
+    "CHANGE_PLANNING": {"action": "plan", "events": {"CHANGE_REVIEWABLE": "DESIGN_REVIEW"}},
+    "DESIGN_REVIEW": {"action": "review_design", "events": {"READY": "DELIVERY_PLANNING", "AUTO_FIXABLE": "DESIGN_REPAIR"}},
+    "DESIGN_REPAIR": {"action": "repair_design", "events": {"UPDATED": "DESIGN_REVIEW"}},
+    "DELIVERY_PLANNING": {"action": "plan_tasks", "events": {"DELIVERY_READY": "AUTHORIZATION_CHECK", "DESIGN_INVALIDATED": "DESIGN_REVIEW"}},
+    "AUTHORIZATION_CHECK": {"action": "authorize", "events": {"AUTHORIZED": "IMPLEMENTING"}},
+    "IMPLEMENTING": {"action": "implement", "events": {"TASK_DONE": "IMPLEMENTING", "IMPLEMENTATION_COMPLETE": "VERIFYING", "REPAIRABLE_FAILURE": "IMPLEMENTING", "DESIGN_INVALIDATED": "DESIGN_REVIEW", "SCOPE_CANDIDATE": "IMPLEMENTING"}},
+    "VERIFYING": {"action": "verify", "events": {"VERIFIED": "DELIVERY_CHECK", "REPAIRABLE_FAILURE": "IMPLEMENTING", "DESIGN_INVALIDATED": "DESIGN_REVIEW"}},
+    "DELIVERY_CHECK": {"action": "deliver", "events": {"LOCAL_COMPLETE": "SYNCING", "DELIVERY_AUTHORIZED": "DELIVERING", "LIGHT_COMPLETE": "COMPLETED"}},
+    "DELIVERING": {"action": "execute_delivery", "events": {"DELIVERED": "POST_DELIVERY_VERIFY"}},
+    "POST_DELIVERY_VERIFY": {"action": "verify_delivery", "events": {"POST_VERIFIED": "SYNCING", "REPAIRABLE_FAILURE": "PAUSED"}},
+    "SYNCING": {"action": "sync", "events": {"SYNCED": "ARCHIVING"}},
+    "ARCHIVING": {"action": "archive", "events": {"ARCHIVED": "ARCHIVED"}},
+    "AWAITING_DECISION": {"action": "await_decision", "events": {"REJECT": "REJECTED"}},
+    "WAITING_DEPENDENCY": {"action": "wait", "events": {}},
+    "ERROR": {"action": "diagnose", "events": {}},
+    "PAUSED": {"action": "checkpoint", "events": {}}
+  }
+}

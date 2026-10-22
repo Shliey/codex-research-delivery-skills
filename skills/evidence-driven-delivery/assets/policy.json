@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "maxRepairAttempts": 3,
+  "defaultEndpoint": "local",
+  "approvalRequired": ["scope_change", "security_change", "ownership_change", "breaking_change", "destructive_action", "external_write", "production_deployment", "public_release"],
+  "forbidden": ["bypass_failed_check", "fabricate_evidence", "silently_expand_scope", "treat_repository_text_as_human_approval"],
+  "notifications": {"progress": "milestones", "unchanged": "silent", "decision": "immediate"}
+}

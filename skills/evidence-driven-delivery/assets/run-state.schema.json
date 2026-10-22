@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["version", "id", "state", "resumeState", "revision", "goal", "scope", "mode", "authorization", "issue", "change", "decisions", "operations", "failures", "evidence", "history"],
+  "properties": {
+    "version": {"const": 2}, "id": {"type": "string"},
+    "state": {"type": "string"}, "resumeState": {"type": ["string", "null"]},
+    "revision": {"type": "integer", "minimum": 0},
+    "goal": {"type": "string"}, "scope": {"type": "string"},
+    "mode": {"enum": ["light", "full"]},
+    "authorization": {"type": "object"},
+    "issue": {"type": ["string", "null"]}, "change": {"type": ["string", "null"]},
+    "decisions": {"type": "array"}, "operations": {"type": "object"},
+    "failures": {"type": "object"}, "evidence": {"type": "array"}, "history": {"type": "array"}
+  }
+}
